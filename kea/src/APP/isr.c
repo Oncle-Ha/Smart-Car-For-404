@@ -101,9 +101,9 @@ void PIT0_ISR(void)
 {
     
     SW_Opt |= (!gpio_get(PTF4));
-    SW_Opt |= (!gpio_get(PTF4)) << 1;
-    SW_Opt |= (!gpio_get(PTF4)) << 2;
-    SW_Opt |= (!gpio_get(PTF4)) << 3;
+    SW_Opt |= (!gpio_get(PTF5)) << 1;
+    SW_Opt |= (!gpio_get(PTF6)) << 2;
+    SW_Opt |= (!gpio_get(PTF7)) << 3;
     switch (SW_Opt)
     {
     case 0:
