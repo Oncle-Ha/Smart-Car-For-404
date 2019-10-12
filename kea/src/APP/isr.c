@@ -82,6 +82,10 @@ void PIT0_ISR_3(void)
     uartPrintf(UARTR0, "%d\n", ftm_count_get(CFTM1));
     ftm_count_clean(CFTM1);
 }
+void PIT0_ISR(void)
+{
+
+}
 /*
 应用于PTA0-PTD7的外部中断
 
