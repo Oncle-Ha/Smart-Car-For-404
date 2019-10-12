@@ -25,7 +25,7 @@ int LED_state[4] = {1, 0, 0, 0};
 
 
 
-void main_1_2()
+void main_1_1()
 {
     DisableInterrupts;
     PIT_Init(PIT_CHANNEL0, 1);
@@ -41,7 +41,7 @@ void main_1_2()
     while(1) ;
 }
 
-void mian_3_1()
+void mian_3()
 {
 	DisableInterrupts;
   PIT_Init(PIT_CHANNEL0, 1);//初始化中断计时器PIT0

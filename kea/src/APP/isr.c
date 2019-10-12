@@ -76,7 +76,7 @@ void PIT0_ISR_1_2(void)
     LED_state[1] = temp;
 }
 
-void PIT0_ISR_3_1(void)
+void PIT0_ISR_3(void)
 {
     PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
     uartPrintf(UARTR0, "%d\n", ftm_count_get(CFTM1));
