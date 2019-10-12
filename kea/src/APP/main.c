@@ -53,6 +53,19 @@ void mian_3()
   while(1) ;
 }
 
+void main_4()
+{
+  DisableInterrupts;
+  uart_init(UARTR0, 9600);
+  ADC_Init(ADC_CHANNEL_AD6,ADC_12BIT);
+  EnableInterrupts;
+  
+  while(1){
+    int val = adc_once(ADC_CHANNEL_AD6);
+    uart_sendware(UARTR0, &val, sizeof(val));
+  }
+}
+
 //#if -#elif -#endif 
 #if 1
 void main()

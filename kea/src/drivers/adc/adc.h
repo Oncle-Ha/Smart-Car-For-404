@@ -94,7 +94,8 @@ typedef enum ADC_nbit
     ADC_10BIT  = 0x01,
     ADC_12BIT  = 0x02,
 } ADC_nbit;
-/*! @} End of adc_mode_list                                               						*/
+/*! @} End of adc_mode_list    
+//精度                                           						*/
 
 /******************************************************************************
 * define ADC channel
