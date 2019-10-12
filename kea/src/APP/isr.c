@@ -81,6 +81,19 @@ void PIT0_ISR(void)
 
 */
 //KBI0中断函数
+
+// void KBI0_Isr(void)
+// {
+
+//     KBI0->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
+//     KBI0->SC |= KBI_SC_RSTKBSP_MASK; //清除中断标志位
+
+//     if (!gpio_get(PTD5)) // 判断PTD5是否是低电平
+//     {
+//         uartPrintf(UARTR2, "PTD5 interrupt\n");
+//     }
+// }
+
 void KBI0_Isr(void)
 {
 
@@ -91,6 +104,12 @@ void KBI0_Isr(void)
     {
         uartPrintf(UARTR2, "PTD5 interrupt\n");
     }
+    //按键开关，按一下即改变对应LED灯状态
+    if(!gpio_get(PTF0)) LED_state[0] ^= 1;
+    if(!gpio_get(PTF1)) LED_state[1] ^= 1;
+    if(!gpio_get(PTF2)) LED_state[2] ^= 1;
+    if(!gpio_get(PTF3)) LED_state[3] ^= 1;
+
 }
 
 /*

@@ -19,11 +19,9 @@
   ADC_CHANNEL_AD13 ------------- F5 
   ADC_CHANNEL_AD14 ------------- F6
   ADC_CHANNEL_AD15 ------------- F7
-
+s
 */
 int LED_state[4] = {1, 0, 0, 0};
-
-
 
 
 
@@ -45,8 +43,9 @@ void main()
     while(1) ;
 
     return;
-）
+}
 #elif 0
+
 void main(){
     DisableInterrupts;
 
@@ -58,6 +57,7 @@ void main(){
 
 
 
+#endif
 
 
 

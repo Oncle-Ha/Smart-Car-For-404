@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\IAR8\common\bin\cspybat" -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.general.xcl" --backend -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.driver.xcl" 
+& "C:\IAR8\common\bin\cspybat" -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.general.xcl" --backend -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.driver.xcl" 
 }
 else
 {
-& "C:\IAR8\common\bin\cspybat" -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.driver.xcl" 
+& "C:\IAR8\common\bin\cspybat" -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.driver.xcl" 
 }
