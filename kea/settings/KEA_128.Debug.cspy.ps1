@@ -23,9 +23,9 @@
 
 if ($debugfile -eq "")
 {
-& "C:\IAR8\common\bin\cspybat" -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.general.xcl" --backend -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.driver.xcl" 
+& "D:\学习资源\智能车\IAR8\common\bin\cspybat" -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.general.xcl" --backend -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.driver.xcl" 
 }
 else
 {
-& "C:\IAR8\common\bin\cspybat" -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.general.xcl" --debug_file=$debugfile --backend -f "C:\IAR8\Local-repository\kea\settings\KEA_128.Debug.driver.xcl" 
+& "D:\学习资源\智能车\IAR8\common\bin\cspybat" -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.general.xcl" --debug_file=$debugfile --backend -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.driver.xcl" 
 }

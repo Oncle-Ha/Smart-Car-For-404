@@ -1,5 +1,9 @@
 #include "isr.h"
+#include "subisr.h"
+#include<math.h>
 extern int *LED_state;
+extern double systime;
+extern double sin_systime;
 //串口0接收中断服务例程
 void UART0_ISR(void)
 {
@@ -63,37 +67,24 @@ void UART2_ISR(void)
 int stime = 0; //系统时间
 //定时器0中断函数
 
-void PIT0_ISR(void)
-{
-    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; //清除中断标志位
 
-    // stime++;
-    // uartPrintf(UARTR2,"hello %d\n",stime);
-    int temp = LED_state[0];
-    LED_state[0] = LED_state[3];
-    LED_state[3] = LED_state[2];
-    LED_state[2] = LED_state[1];
-    LED_state[1] = temp;
+void PIT0_ISR(void){
+    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+    // 下面用按键开关控制选取需要的模块
+    if(1){
+        PIT0_ISR_GPIO();
+    }
+    else if(0){
+        PIT0_ISR_UART();
+    }
 }
 
-/*
 应用于PTA0-PTD7的外部中断
 
 */
 //KBI0中断函数
 
-// void KBI0_Isr(void)
-// {
-
-//     KBI0->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
-//     KBI0->SC |= KBI_SC_RSTKBSP_MASK; //清除中断标志位
-
-//     if (!gpio_get(PTD5)) // 判断PTD5是否是低电平
-//     {
-//         uartPrintf(UARTR2, "PTD5 interrupt\n");
-//     }
-// }
-
+//GPIO题目
 void KBI0_Isr(void)
 {
 
@@ -111,6 +102,7 @@ void KBI0_Isr(void)
     if(!gpio_get(PTF3)) LED_state[3] ^= 1;
     
 }
+
 
 /*
 应用于PTE0-PTH7的外部中断
