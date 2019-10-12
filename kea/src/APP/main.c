@@ -25,9 +25,7 @@ int LED_state[4] = {1, 0, 0, 0};
 
 
 
-//#if -#elif -#endif 
-#if 1
-void main()
+void main_1_2()
 {
     DisableInterrupts;
     PIT_Init(PIT_CHANNEL0, 1);
@@ -41,10 +39,29 @@ void main()
     uart_rx_irq_en(UARTR0);
     EnableInterrupts;
     while(1) ;
+}
+
+void mian_3_1()
+{
+	DisableInterrupts;
+  PIT_Init(PIT_CHANNEL0, 1);//初始化中断计时器PIT0
+  uart_init(UARTR0, 9600);//初始化串口UARTR0
+  FTM_PWM_init(CFTM0, FTM_CH0, 50, 10);//初始化CFTM0输出PWM的参数，通道为FTM_CH0
+  ftm_count_init(CFTM1);//初始化用于测PWM波的CFTM1
+  PIT_IRQ_EN(PIT_CHANNEL0);//启动PIT0
+	EnableInterrupts; 
+  while(1) ;
+}
+
+//#if -#elif -#endif 
+#if 1
+void main()
+{
 
     return;
 }
-#elif 0
+#elif 
+ 
 
 void main(){
     DisableInterrupts;

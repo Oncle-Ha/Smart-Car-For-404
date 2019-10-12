@@ -1,5 +1,6 @@
 {
     "files.associations": {
-        "headfile.h": "c"
+        "headfile.h": "c",
+        "gpio_icf.h": "c"
     }
 }

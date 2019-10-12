@@ -63,7 +63,7 @@ void UART2_ISR(void)
 int stime = 0; //系统时间
 //定时器0中断函数
 
-void PIT0_ISR(void)
+void PIT0_ISR_1_2(void)
 {
     PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; //清除中断标志位
 
@@ -76,6 +76,12 @@ void PIT0_ISR(void)
     LED_state[1] = temp;
 }
 
+void PIT0_ISR_3_1(void)
+{
+    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+    uartPrintf(UARTR0, "%d\n", ftm_count_get(CFTM1));
+    ftm_count_clean(CFTM1);
+}
 /*
 应用于PTA0-PTD7的外部中断
 
