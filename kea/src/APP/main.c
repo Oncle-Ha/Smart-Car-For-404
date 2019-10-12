@@ -22,10 +22,11 @@
 s
 */
 int LED_state[4] = {1, 0, 0, 0};
+int SW_Opt = 0;//拨码开关的01表示
+double systime=0, sin_systime;
 
 
-
-void main_1_1()
+void main_0()
 {
     DisableInterrupts;
     PIT_Init(PIT_CHANNEL0, 1);
@@ -41,7 +42,23 @@ void main_1_1()
     while(1) ;
 }
 
-void mian_3()
+void main_1()
+{
+  DisableInterrupts;
+  PIT_Init(PIT_CHANNEL0, 100);
+  uart_init(UARTR1, 115200);
+
+  PIT_IRQ_EN(PIT_CHANNEL0);
+  uart_rx_irq_en(UARTR1);
+
+  EnableInterrupts;
+
+  while(1){
+    uart_sendware(UARTR0,&sin_systime,sizeof(sin_systime));
+  }
+}
+
+void main_2()
 {
 	DisableInterrupts;
   PIT_Init(PIT_CHANNEL0, 1);//初始化中断计时器PIT0
@@ -53,13 +70,13 @@ void mian_3()
   while(1) ;
 }
 
-void main_4()
+void main_3()
 {
   DisableInterrupts;
   uart_init(UARTR0, 9600);
   ADC_Init(ADC_CHANNEL_AD6,ADC_12BIT);
   EnableInterrupts;
-  
+
   while(1){
     int val = adc_once(ADC_CHANNEL_AD6);
     uart_sendware(UARTR0, &val, sizeof(val));
@@ -70,7 +87,23 @@ void main_4()
 #if 1
 void main()
 {
-
+    switch (SW_Opt)
+    {
+    case 0:
+      main_0();
+      break;
+    case 1:
+      main_1();
+      break;
+    case 2:
+      main_2();
+      break;
+    case 3:
+      main_3();
+      break;  
+    default:
+      break;
+    }
     return;
 }
 #elif 

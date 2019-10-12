@@ -63,7 +63,7 @@ void UART2_ISR(void)
 int stime = 0; //系统时间
 //定时器0中断函数
 
-void PIT0_ISR_1_2(void)
+void PIT0_ISR_0(void)
 {
     PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; //清除中断标志位
 
@@ -74,17 +74,50 @@ void PIT0_ISR_1_2(void)
     LED_state[3] = LED_state[2];
     LED_state[2] = LED_state[1];
     LED_state[1] = temp;
+    gpio_set(PTG0, LED_state[0]);
+    gpio_set(PTG1, LED_state[1]);
+    gpio_set(PTG2, LED_state[2]);
+    gpio_set(PTG3, LED_state[3]);
 }
 
-void PIT0_ISR_3(void)
+extern double systime, sin_systime;
+void PIT0_ISR_1(void){
+    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+    systime += 0.01;
+    sin_systime = sin(systime);
+    uartPrintf(UARTR1, "%.6lf\n", sin_systime);
+}
+
+void PIT0_ISR_2(void)
 {
     PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
     uartPrintf(UARTR0, "%d\n", ftm_count_get(CFTM1));
     ftm_count_clean(CFTM1);
 }
+
+extern int SW_Opt;//拨码开关的01表示
+
 void PIT0_ISR(void)
 {
-
+    
+    SW_Opt |= (!gpio_get(PTF4));
+    SW_Opt |= (!gpio_get(PTF4)) << 1;
+    SW_Opt |= (!gpio_get(PTF4)) << 2;
+    SW_Opt |= (!gpio_get(PTF4)) << 3;
+    switch (SW_Opt)
+    {
+    case 0:
+        PIT0_ISR_0();
+        break;
+    case 1:
+        PIT0_ISR_1();
+        break;
+    case 2:
+        PIT0_ISR_2();
+        break;
+    default:
+        break;
+    }
 }
 /*
 应用于PTA0-PTD7的外部中断
@@ -121,6 +154,7 @@ void KBI0_Isr(void)
     if(!gpio_get(PTF3)) LED_state[3] ^= 1;
     
 }
+
 
 /*
 应用于PTE0-PTH7的外部中断
