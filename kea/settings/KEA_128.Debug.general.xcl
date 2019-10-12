@@ -1,0 +1,15 @@
+"C:\IAR8\arm\bin\armproc.dll" 
+
+"C:\IAR8\arm\bin\armjlink2.dll" 
+
+"D:\读书人的事\智能车\kea模板7.8\Debug\Exe\KEA_128.out" 
+
+--plugin="C:\IAR8\arm\bin\armbat.dll" 
+
+--device_macro="C:\IAR8\arm\config\debugger\NXP\KExx.dmac" 
+
+--flash_loader="C:\IAR8\arm\config\flashloader\NXP\FlashKE04Z128_4.board" 
+
+
+
+
