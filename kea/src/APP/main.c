@@ -87,6 +87,10 @@ void main_3()
 #if 1
 void main()
 {
+    SW_Opt |= (gpio_get(PTF4));
+    SW_Opt |= (gpio_get(PTF5)) << 1;
+    SW_Opt |= (gpio_get(PTF6)) << 2;
+    SW_Opt |= (gpio_get(PTF7)) << 3;
     switch (SW_Opt)
     {
     case 0:

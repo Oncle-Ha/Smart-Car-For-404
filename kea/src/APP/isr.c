@@ -99,11 +99,6 @@ extern int SW_Opt;//拨码开关的01表示
 
 void PIT0_ISR(void)
 {
-    
-    SW_Opt |= (!gpio_get(PTF4));
-    SW_Opt |= (!gpio_get(PTF5)) << 1;
-    SW_Opt |= (!gpio_get(PTF6)) << 2;
-    SW_Opt |= (!gpio_get(PTF7)) << 3;
     switch (SW_Opt)
     {
     case 0:
@@ -148,10 +143,10 @@ void KBI0_Isr(void)
         uartPrintf(UARTR2, "PTD5 interrupt\n");
     }
     //按键开关，按一下即改变对应LED灯状态
-    if(!gpio_get(PTF0)) LED_state[0] ^= 1;
-    if(!gpio_get(PTF1)) LED_state[1] ^= 1;
-    if(!gpio_get(PTF2)) LED_state[2] ^= 1;
-    if(!gpio_get(PTF3)) LED_state[3] ^= 1;
+    if(gpio_get(PTF0)) LED_state[0] ^= 1;
+    if(gpio_get(PTF1)) LED_state[1] ^= 1;
+    if(gpio_get(PTF2)) LED_state[2] ^= 1;
+    if(gpio_get(PTF3)) LED_state[3] ^= 1;
     
 }
 
