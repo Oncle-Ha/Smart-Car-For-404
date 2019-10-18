@@ -166,7 +166,7 @@ void ftm_count_init(FTMn_e ftmn)
     
     FTMx[ftmn]->SC |= FTM_SC_PS(0);	                        //分频系数	
     FTMx[ftmn]->SC |= FTM_SC_CLKS(3);                       //选择外部时钟作为FTM输入时钟
-                
+              
     FTMx[ftmn]->CNT = 0;                                    //加载初始化值
 }
 

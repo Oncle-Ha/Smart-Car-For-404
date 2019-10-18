@@ -23,7 +23,7 @@
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
     <DebugChecksum>
-        <Checksum>371269839</Checksum>
+        <Checksum>1880899413</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -64,6 +64,7 @@
         <ShowArgs>0</ShowArgs>
     </CallStack>
     <Disassembly>
+        <InstrCount>0</InstrCount>
         <MixedMode>1</MixedMode>
     </Disassembly>
     <JLinkDriver>
@@ -122,19 +123,57 @@
         <UnspecRange>1</UnspecRange>
         <ActionState>1</ActionState>
     </MemoryMap>
-    <Trace1>
-        <Enabled>0</Enabled>
-        <ShowSource>1</ShowSource>
-    </Trace1>
     <Log_file>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </Log_file>
+    <Disassemble_mode>
+        <mode>0</mode>
+    </Disassemble_mode>
+    <Trace1>
+        <Enabled>0</Enabled>
+        <ShowSource>1</ShowSource>
+    </Trace1>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\drivers\ics\ics.h}.257.1" 0 0 1 "" 0 "" 0</Bp0>
+        <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.85.9" 0 0 1 "" 0 "" 0</Bp1>
+        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.102.9" 0 0 1 "" 0 "" 0</Bp2>
+        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.175.9" 0 0 1 "" 0 "" 0</Bp3>
+        <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.4.1" 0 0 1 "" 0 "" 0</Bp4>
+        <Bp5>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.26.5" 0 0 1 "" 0 "" 0</Bp5>
+        <Bp6>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.6.1" 0 0 1 "" 0 "" 0</Bp6>
+        <Bp7>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.133.5" 0 0 1 "" 0 "" 0</Bp7>
+        <Bp8>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.8.5" 0 0 1 "" 0 "" 0</Bp8>
+        <Bp9>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.48.3" 0 0 1 "" 0 "" 0</Bp9>
+        <Bp10>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.61.3" 0 0 1 "" 0 "" 0</Bp10>
+        <Bp11>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.78.3" 0 0 1 "" 0 "" 0</Bp11>
+        <Count>12</Count>
+    </Breakpoints2>
     <TermIOLog>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
     </TermIOLog>
+    <LogFile>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+        <Category>_ 0</Category>
+    </LogFile>
+    <Aliases>
+        <A0>_ "C:\IAR8\Local-repository\kea\src\drivers\gpio\gpio.c" ""</A0>
+        <A1>_ "C:\IAR8\Local-repository\kea\src\drivers\uart\uart.c" ""</A1>
+        <A2>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\APP\main.c" ""</A2>
+        <A3>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A3>
+        <A4>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC_UART\src\drivers\wdog\wdog.c" ""</A4>
+        <A5>_ "D:\kea\LQ_KEAZ128_ADC\src\common\startup.c" ""</A5>
+        <A6>_ "D:\kea\LQ_KEAZ128_ADC\src\cpu\crt0.s" ""</A6>
+        <A7>_ "D:\kea\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A7>
+        <Count>8</Count>
+        <SuppressDialog>1</SuppressDialog>
+    </Aliases>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>1</Mode>
@@ -148,32 +187,8 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
-    <Disassemble_mode>
-        <mode>0</mode>
-    </Disassemble_mode>
-    <LogFile>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-        <Category>_ 0</Category>
-    </LogFile>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.241.1" 0 0 1 "" 0 "" 0</Bp0>
-        <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.241.1" 0 0 1 "" 0 "" 0</Bp1>
-        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.241.1" 0 0 1 "" 0 "" 0</Bp2>
-        <Bp3>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\drivers\ics\ics.h}.257.1" 0 0 1 "" 0 "" 0</Bp3>
-        <Count>4</Count>
-    </Breakpoints2>
-    <Aliases>
-        <A0>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\APP\main.c" ""</A0>
-        <A1>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A1>
-        <A2>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC_UART\src\drivers\wdog\wdog.c" ""</A2>
-        <A3>_ "D:\kea\LQ_KEAZ128_ADC\src\common\startup.c" ""</A3>
-        <A4>_ "D:\kea\LQ_KEAZ128_ADC\src\cpu\crt0.s" ""</A4>
-        <A5>_ "D:\kea\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A5>
-        <Count>6</Count>
-        <SuppressDialog>1</SuppressDialog>
-    </Aliases>
 </settings>
+[JLinkDriver]
+TraceBufferSize=0x00010000
+TraceStallIfFIFOFull=0x00000000
+TracePortSize=0x00000000

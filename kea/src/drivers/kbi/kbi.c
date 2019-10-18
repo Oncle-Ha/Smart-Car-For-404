@@ -1,21 +1,23 @@
 #include "common.h"
 #include "kbi.h"
 
-volatile KBI_Type * KBIx[2] = { KBI0,KBI1} ;
+volatile KBI_Type * KBIx[2]  ;
 
 /*************************************************************************
 *  函数名称：  KBI_Init
 *  功能说明：  初始化中断
 *  函数返回：
 *  参数说明：
-*  for example KBI_Init(KBIX0, 29, KBI_FALLING_LOW);//PTD5
+*  for example KBI_Init(KBIX0, 29, KBI_FALLING_LOW);//PTD5 
 *************************************************************************/
 void KBI_Init(KBIn_e kbix,uint8_t kbich,KBI_Edge RiFal)
 {
+  KBIx[0] = KBI0;
+  KBIx[1] = KBI1;
   
-  if(kbix == KBIX0 )
+  if(kbix == KBIX0 )//初始化KBI0
     {
-        SIM->SCGC   |= SIM_SCGC_KBI0_MASK;             /* enable clock to KBI0 */\
+        SIM->SCGC   |= SIM_SCGC_KBI0_MASK;             /* enable clock to KBI0 */
         KBIx[kbix]->SC  &= ~KBI_SC_KBIE_MASK ;
         /****
         初始化IO
@@ -26,7 +28,7 @@ void KBI_Init(KBIn_e kbix,uint8_t kbich,KBI_Edge RiFal)
         else PORT->PUE0  |= (1<<kbich);
         
     }
-    else if (kbix == KBIX1)
+    else if (kbix == KBIX1)//初始化KBI1
     {        
         SIM->SCGC   |= SIM_SCGC_KBI1_MASK;             /* enable clock to KBI1 */
         KBIx[kbix]->SC  &= ~KBI_SC_KBIE_MASK ;
@@ -80,6 +82,8 @@ void KBI_Init(KBIn_e kbix,uint8_t kbich,KBI_Edge RiFal)
 *************************************************************************/
 void KBI_Disable(KBIn_e kbix,uint8_t kbich)
 {
+    KBIx[0] = KBI0;
+    KBIx[1] = KBI1;
     KBIx[kbix]->PE &= ~(1 << kbich) ;  
 }
 /*************************************************************************
@@ -91,6 +95,8 @@ void KBI_Disable(KBIn_e kbix,uint8_t kbich)
 *************************************************************************/
 void KBI_Enable(KBIn_e kbix,uint8_t kbich)
 {
+  KBIx[0] = KBI0;
+  KBIx[1] = KBI1;
   KBI0->SC |= KBI_SC_RSTKBSP_MASK ;    //清除中断标志位
   KBIx[kbix]->PE |= (1 << kbich) ;
 }

@@ -6,7 +6,7 @@
 
 "-p" 
 
-"C:\IAR8\arm\CONFIG\debugger\NXP\KEAZ128xxx4.ddf" 
+"D:\learning_souce\smartcar\IAR8\arm\CONFIG\debugger\NXP\KEAZ128xxx4.ddf" 
 
 "--drv_verify_download" 
 
