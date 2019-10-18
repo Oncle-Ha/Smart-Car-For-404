@@ -1,0 +1,7 @@
+{
+    "files.associations": {
+        "headfile.h": "c",
+        "gpio_icf.h": "c",
+        "isr.h": "c"
+    }
+}
