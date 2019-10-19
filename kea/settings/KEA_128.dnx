@@ -23,7 +23,7 @@
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
     <DebugChecksum>
-        <Checksum>1880899413</Checksum>
+        <Checksum>228675051</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -148,9 +148,9 @@
         <Bp6>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.6.1" 0 0 1 "" 0 "" 0</Bp6>
         <Bp7>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.133.5" 0 0 1 "" 0 "" 0</Bp7>
         <Bp8>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.8.5" 0 0 1 "" 0 "" 0</Bp8>
-        <Bp9>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.48.3" 0 0 1 "" 0 "" 0</Bp9>
-        <Bp10>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.61.3" 0 0 1 "" 0 "" 0</Bp10>
-        <Bp11>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.78.3" 0 0 1 "" 0 "" 0</Bp11>
+        <Bp9>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.48.3" 0 0 1 "" 0 "" 0</Bp9>
+        <Bp10>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.61.3" 0 0 1 "" 0 "" 0</Bp10>
+        <Bp11>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.78.3" 0 0 1 "" 0 "" 0</Bp11>
         <Count>12</Count>
     </Breakpoints2>
     <TermIOLog>
@@ -171,7 +171,9 @@
         <A5>_ "D:\kea\LQ_KEAZ128_ADC\src\common\startup.c" ""</A5>
         <A6>_ "D:\kea\LQ_KEAZ128_ADC\src\cpu\crt0.s" ""</A6>
         <A7>_ "D:\kea\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A7>
-        <Count>8</Count>
+        <A8>_ "D:\英雄时刻\keatest\Code\src\APP\main.c" ""</A8>
+        <A9>_ "D:\英雄时刻\keatest\Code\src\drivers\adc\adc.c" ""</A9>
+        <Count>10</Count>
         <SuppressDialog>1</SuppressDialog>
     </Aliases>
     <DriverProfiling>
@@ -188,7 +190,3 @@
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
 </settings>
-[JLinkDriver]
-TraceBufferSize=0x00010000
-TraceStallIfFIFOFull=0x00000000
-TracePortSize=0x00000000

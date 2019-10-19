@@ -161,8 +161,20 @@ void main_3()
     uart_sendware(UARTR0, &val, sizeof(val));
   }
   uart_rx_irq_dis(UARTR0);
+
 }
 
+int num_16_base = 0;
+void main_4(){
+  DisableInterrupts;
+  gpio_init(PTH6, 1, 0);
+  EnableInterrupts;
+  
+  while(1){
+      if (SW_Opt != 4)
+      break;
+  }    
+}
 //#if -#elif -#endif
 
 PTxn KBI_USE_PT1[8] = {PTF0, PTF1, PTF2, PTF3, PTF4, PTF5, PTF6, PTF7};
@@ -195,18 +207,20 @@ void main()
   {
     switch (SW_Opt)
     {
-    case 0:
+    case 0://GPIO问题
       main_0();
       break;
-    case 1:
+    case 1://串口问题、指定灯亮
       main_1();
       break;
-    case 2:
+    case 2://FIM 
       main_2();
       break;
-    case 3:
+    case 3://AD
       main_3();
       break;
+    case 4://16进制数
+      main_4();
     default:
       break;
     }

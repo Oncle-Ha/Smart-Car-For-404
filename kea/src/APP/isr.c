@@ -198,16 +198,38 @@ void PIT0_ISR(void)
 //         uartPrintf(UARTR2, "PTD5 interrupt\n");
 //     }
 // }
+
+extern int num_16_base;
+extern PTxn LED_USE_PT[4];
+const int time_10_ms = 10 * CORE_CLK_KHZ / 4;
+
 void KBI0_Isr(void)
 {
 
     KBI0->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
     KBI0->SC |= KBI_SC_RSTKBSP_MASK; //清除中断标志位
+    
+    int low_level_time = 0;
+    while(!gpio_get(PTD4)) ++low_level_time;//消抖
+    if(low_level_time > time_10_ms){//
+        if(num_16_base == 15){
+            num_16_base = 0;
 
-    if (!gpio_get(PTD5)) // 判断PTD5是否是低电平
-    {
-        uartPrintf(UARTR2, "PTD5 interrupt\n");
+            gpio_set(PTH6, 1);
+            delayms(1000);//享受1s的尖叫
+            gpio_set(PTH6, 0);
+        }
+        else ++num_16_base;
+        for(int i = 0; i < 4; ++i){
+            LED_state[i] = ( (num_16_base & (1 << i) )> 0);
+            gpio_set(LED_USE_PT[i], LED_state[i]);
+        }
     }
+
+    // if (!gpio_get(PTD5)) // 判断PTD5是否是低电平
+    // {
+    //     uartPrintf(UARTR2, "PTD5 interrupt\n");
+    // }
     //按键开关，按一下即改变对应LED灯状态
 }
 
