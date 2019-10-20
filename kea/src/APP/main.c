@@ -179,12 +179,12 @@ void main_4(){
 
 void main_5(){
   OLED_Init();
-  gpio_init(PTD0, 1, 0);
-  gpio_init(PTD1, 1, 0);
-  gpio_init(PTD2, 1, 0);
-  gpio_init(PTD3, 1, 0);
-  // OLED_Rectangle(1, 1, 50, 50, 1);
-  while(1)OLED_Set_Pos(5, 5);
+  OLED_Set_Pos(0, 0);
+  
+  while(1){
+    OLED_WrDat(0xFF);
+    if(SW_Opt != 5)break;
+  }
 }
 
 

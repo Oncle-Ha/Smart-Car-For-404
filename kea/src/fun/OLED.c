@@ -332,13 +332,29 @@ void OLED_WrCmd(uint8_t cmd)
 *  函数名称：OLED_Set_Pos
 *  功能说明：设置位置函数
 *  参数说明： x
-*             y
+*             y页码，起始像素点(x, y<<3)
 *  函数返回：无
 *  备    注：
 *************************************************************************/
-void OLED_Set_Pos(uint8_t x, uint8_t y)
+void OLED_Set_Pos(uint8_t x, uint8_t y)//x为长的，y为宽的，且y表示页码，即像素点(x, y*8)
 {
-  OLED_WrCmd(0xb0+y);
+  OLED_WrCmd(0xb0+y);/* page address */
+  OLED_WrCmd(((x&0xf0)>>4)|0x10);/* Lower Column Start Address */
+  OLED_WrCmd((x&0x0f)|0x01);/* Lower Higher Start Address */
+}
+
+
+/*************************************************************************
+*  函数名称：OLED_Set_Dot
+*  功能说明：设置位置函数
+*  参数说明： x
+*             y 像素点(x,y)
+*  函数返回：无
+*  备    注：
+*************************************************************************/
+void OLED_Set_Dot(uint8_t x, uint8_t y)//x为长的，y为宽的，即像素点(x, y)
+{
+  OLED_WrCmd(0xb0+(y>>3));
   OLED_WrCmd(((x&0xf0)>>4)|0x10);
   OLED_WrCmd((x&0x0f)|0x01);
 }
@@ -417,11 +433,12 @@ void OLED_Init(void)
   gpio_init (PTD2, GPO,LOW);
   gpio_init (PTD3, GPO,HIGH);
   
-  OLED_SCL=1;
-  OLED_RST=0;
+  OLED_SCL=1;//时钟开启
+  OLED_RST=0;//关闭OLED
   OLED_DLY_ms(50);
-  OLED_RST=1;
-  
+  OLED_RST=1;//开启OLED
+  // 即重启OLED
+
   OLED_WrCmd(0xae);//--turn off oled panel
   OLED_WrCmd(0x00);//---set low column address
   OLED_WrCmd(0x10);//---set high column address
@@ -443,8 +460,10 @@ void OLED_Init(void)
   OLED_WrCmd(0x12);
   OLED_WrCmd(0xdb);//--set vcomh
   OLED_WrCmd(0x40);//Set VCOM Deselect Level
+
   OLED_WrCmd(0x20);//-Set Page Addressing Mode (0x00/0x01/0x02)
-  OLED_WrCmd(0x02);//
+  OLED_WrCmd(0x02);//这两行设置页码模式
+
   OLED_WrCmd(0x8d);//--set Charge Pump enable/disable
   OLED_WrCmd(0x14);//--set(0x10) disable
   OLED_WrCmd(0xa4);// Disable Entire Display On (0xa4/0xa5)
@@ -464,11 +483,11 @@ void OLED_PutPixel(uint8_t x,uint8_t y)
 {
   uint8_t data1;  //data1当前点的数据
   
-  OLED_Set_Pos(x,y);
+  // OLED_Set_Pos(x,y>>3); //
   data1 = 0x01<<(y%8);
   OLED_WrCmd(0xb0+(y>>3));
   OLED_WrCmd(((x&0xf0)>>4)|0x10);
-  OLED_WrCmd((x&0x0f)|0x00);
+  OLED_WrCmd((x&0x0f)|0x01);
   OLED_WrDat(data1);
 }
 /*************************************************************************
