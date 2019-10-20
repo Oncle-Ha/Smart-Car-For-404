@@ -177,6 +177,17 @@ void main_4(){
 }
 //#if -#elif -#endif
 
+void main_5(){
+  OLED_Init();
+  gpio_init(PTD0, 1, 0);
+  gpio_init(PTD1, 1, 0);
+  gpio_init(PTD2, 1, 0);
+  gpio_init(PTD3, 1, 0);
+  // OLED_Rectangle(1, 1, 50, 50, 1);
+  while(1)OLED_Set_Pos(5, 5);
+}
+
+
 PTxn KBI_USE_PT1[8] = {PTF0, PTF1, PTF2, PTF3, PTF4, PTF5, PTF6, PTF7};
 PTxn LED_USE_PT[4] = {PTG0, PTG1, PTG2, PTG3};
 void main()
@@ -221,6 +232,10 @@ void main()
       break;
     case 4://16进制数
       main_4();
+      break;
+    case 5://OLED
+      main_5();
+      break;
     default:
       break;
     }

@@ -23,7 +23,7 @@
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
     <DebugChecksum>
-        <Checksum>228675051</Checksum>
+        <Checksum>3351924383</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -135,6 +135,28 @@
         <Enabled>0</Enabled>
         <ShowSource>1</ShowSource>
     </Trace1>
+    <TermIOLog>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+    </TermIOLog>
+    <LogFile>
+        <LoggingEnabled>_ 0</LoggingEnabled>
+        <LogFile>_ ""</LogFile>
+        <Category>_ 0</Category>
+    </LogFile>
+    <DriverProfiling>
+        <Enabled>0</Enabled>
+        <Mode>1</Mode>
+        <Graph>0</Graph>
+        <Symbiont>0</Symbiont>
+        <Exclusions />
+    </DriverProfiling>
+    <CallStackLog>
+        <Enabled>0</Enabled>
+    </CallStackLog>
+    <CallStackStripe>
+        <ShowTiming>1</ShowTiming>
+    </CallStackStripe>
     <DisassembleMode>
         <mode>0</mode>
     </DisassembleMode>
@@ -153,15 +175,6 @@
         <Bp11>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.78.3" 0 0 1 "" 0 "" 0</Bp11>
         <Count>12</Count>
     </Breakpoints2>
-    <TermIOLog>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-    </TermIOLog>
-    <LogFile>
-        <LoggingEnabled>_ 0</LoggingEnabled>
-        <LogFile>_ ""</LogFile>
-        <Category>_ 0</Category>
-    </LogFile>
     <Aliases>
         <A0>_ "C:\IAR8\Local-repository\kea\src\drivers\gpio\gpio.c" ""</A0>
         <A1>_ "C:\IAR8\Local-repository\kea\src\drivers\uart\uart.c" ""</A1>
@@ -176,17 +189,4 @@
         <Count>10</Count>
         <SuppressDialog>1</SuppressDialog>
     </Aliases>
-    <DriverProfiling>
-        <Enabled>0</Enabled>
-        <Mode>1</Mode>
-        <Graph>0</Graph>
-        <Symbiont>0</Symbiont>
-        <Exclusions />
-    </DriverProfiling>
-    <CallStackLog>
-        <Enabled>0</Enabled>
-    </CallStackLog>
-    <CallStackStripe>
-        <ShowTiming>1</ShowTiming>
-    </CallStackStripe>
 </settings>
