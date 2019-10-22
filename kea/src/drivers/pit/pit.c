@@ -6,7 +6,7 @@
 *  功能说明：初始化中断定时器
 *  函数返回：无
 *  参数说明：u8Channel_No：PIT通道端口号  模块号（PIT_CHANNEL0~PIT_CHANNEL1）
-*           freq  ：定时器频率
+*           freq  ：定时器频率  //1s多少下
 *  for example     PIT_Init(PIT_CHANNEL0,100);
 *************************************************************************/
 void PIT_Init(uint8_t u8Channel_No,uint16_t freq)

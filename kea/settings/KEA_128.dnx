@@ -23,7 +23,7 @@
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
     <DebugChecksum>
-        <Checksum>3967718664</Checksum>
+        <Checksum>3461822124</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -135,25 +135,6 @@
         <Enabled>0</Enabled>
         <ShowSource>1</ShowSource>
     </Trace1>
-    <DisassembleMode>
-        <mode>0</mode>
-    </DisassembleMode>
-    <Breakpoints2>
-        <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\drivers\ics\ics.h}.257.1" 0 0 1 "" 0 "" 0</Bp0>
-        <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.85.9" 0 0 1 "" 0 "" 0</Bp1>
-        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.102.9" 0 0 1 "" 0 "" 0</Bp2>
-        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.175.9" 0 0 1 "" 0 "" 0</Bp3>
-        <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.4.1" 0 0 1 "" 0 "" 0</Bp4>
-        <Bp5>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.26.5" 0 0 1 "" 0 "" 0</Bp5>
-        <Bp6>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.6.1" 0 0 1 "" 0 "" 0</Bp6>
-        <Bp7>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.133.5" 0 0 1 "" 0 "" 0</Bp7>
-        <Bp8>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.8.5" 0 0 1 "" 0 "" 0</Bp8>
-        <Bp9>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.48.3" 0 0 1 "" 0 "" 0</Bp9>
-        <Bp10>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.61.3" 0 0 1 "" 0 "" 0</Bp10>
-        <Bp11>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.78.3" 0 0 1 "" 0 "" 0</Bp11>
-        <Bp12>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.181.3" 0 0 1 "" 0 "" 0</Bp12>
-        <Count>13</Count>
-    </Breakpoints2>
     <TermIOLog>
         <LoggingEnabled>_ 0</LoggingEnabled>
         <LogFile>_ ""</LogFile>
@@ -163,20 +144,6 @@
         <LogFile>_ ""</LogFile>
         <Category>_ 0</Category>
     </LogFile>
-    <Aliases>
-        <A0>_ "C:\IAR8\Local-repository\kea\src\drivers\gpio\gpio.c" ""</A0>
-        <A1>_ "C:\IAR8\Local-repository\kea\src\drivers\uart\uart.c" ""</A1>
-        <A2>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\APP\main.c" ""</A2>
-        <A3>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A3>
-        <A4>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC_UART\src\drivers\wdog\wdog.c" ""</A4>
-        <A5>_ "D:\kea\LQ_KEAZ128_ADC\src\common\startup.c" ""</A5>
-        <A6>_ "D:\kea\LQ_KEAZ128_ADC\src\cpu\crt0.s" ""</A6>
-        <A7>_ "D:\kea\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A7>
-        <A8>_ "D:\英雄时刻\keatest\Code\src\APP\main.c" ""</A8>
-        <A9>_ "D:\英雄时刻\keatest\Code\src\drivers\adc\adc.c" ""</A9>
-        <Count>10</Count>
-        <SuppressDialog>1</SuppressDialog>
-    </Aliases>
     <DriverProfiling>
         <Enabled>0</Enabled>
         <Mode>1</Mode>
@@ -190,4 +157,36 @@
     <CallStackStripe>
         <ShowTiming>1</ShowTiming>
     </CallStackStripe>
+    <DisassembleMode>
+        <mode>0</mode>
+    </DisassembleMode>
+    <Breakpoints2>
+        <Bp0>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\drivers\ics\ics.h}.257.1" 0 0 1 "" 0 "" 0</Bp0>
+        <Bp1>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.85.9" 0 0 1 "" 0 "" 0</Bp1>
+        <Bp2>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.103.5" 0 0 1 "" 0 "" 0</Bp2>
+        <Bp3>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.4.1" 0 0 1 "" 0 "" 0</Bp3>
+        <Bp4>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.26.5" 0 0 1 "" 0 "" 0</Bp4>
+        <Bp5>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.6.1" 0 0 1 "" 0 "" 0</Bp5>
+        <Bp6>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.8.5" 0 0 1 "" 0 "" 0</Bp6>
+        <Bp7>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.48.3" 0 0 1 "" 0 "" 0</Bp7>
+        <Bp8>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.61.3" 0 0 1 "" 0 "" 0</Bp8>
+        <Bp9>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.78.3" 0 0 1 "" 0 "" 0</Bp9>
+        <Bp10>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.244.9" 0 0 1 "" 0 "" 0</Bp10>
+        <Count>11</Count>
+    </Breakpoints2>
+    <Aliases>
+        <A0>_ "C:\IAR8\Local-repository\kea\src\drivers\gpio\gpio.c" ""</A0>
+        <A1>_ "C:\IAR8\Local-repository\kea\src\drivers\uart\uart.c" ""</A1>
+        <A2>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\APP\main.c" ""</A2>
+        <A3>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A3>
+        <A4>_ "C:\Users\longqiu-art\Desktop\KEA128-IAR\LQ_KEAZ128_ADC_UART\src\drivers\wdog\wdog.c" ""</A4>
+        <A5>_ "D:\kea\LQ_KEAZ128_ADC\src\common\startup.c" ""</A5>
+        <A6>_ "D:\kea\LQ_KEAZ128_ADC\src\cpu\crt0.s" ""</A6>
+        <A7>_ "D:\kea\LQ_KEAZ128_ADC\src\drivers\uart\uart.c" ""</A7>
+        <A8>_ "D:\英雄时刻\keatest\Code\src\APP\main.c" ""</A8>
+        <A9>_ "D:\英雄时刻\keatest\Code\src\drivers\adc\adc.c" ""</A9>
+        <A10>_ "D:\英雄时刻\keatest\Code\src\drivers\ftm\ftm.c" ""</A10>
+        <Count>11</Count>
+        <SuppressDialog>1</SuppressDialog>
+    </Aliases>
 </settings>

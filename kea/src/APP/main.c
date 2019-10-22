@@ -21,7 +21,7 @@
   ADC_CHANNEL_AD15 ------------- F7
 s
 */
-int LED_state[4] = {0, 0, 0, 0};
+int LED_state[5] = {0, 0, 0, 0, 0};
 int SW_Opt = 0; //拨码开关的01表示
 int bupt = 0, Key = 0;
 double systime = 0, sin_systime;
@@ -94,11 +94,28 @@ void main_1_3()
   uart_init(UARTR0, 9600);
   uart_rx_irq_en(UARTR0);
   EnableInterrupts;
-  while (LED_state[3] == 1)
-  {}
+  while (LED_state[3] == 1);
   
   uart_rx_irq_dis(UARTR0);
 }
+
+uint8_t To_Matrix[128][8] = {0};
+void main_1_4(){//输出到OLED
+  DisableInterrupts;
+  PIT_Init(PIT_CHANNEL0, 10);
+  OLED_Init();
+  Coord_Init(0, -1.1, 128, 1.1);
+
+  PIT_IRQ_EN(PIT_CHANNEL0);
+  EnableInterrupts;
+
+  while(LED_state[4] == 1);
+
+  PIT_IRQ_DIS(PIT_CHANNEL0);
+
+}
+
+
 void main_1()
 {
   while (1)
@@ -120,7 +137,11 @@ void main_1()
     else if (LED_state[3])
     {
       main_1_3();
+    }else if(LED_state[4]){
+      main_1_4();
     }
+    //预计加个OLED显示Sint函数 LED_state[4]
+
   }
 }
 
@@ -179,12 +200,14 @@ void main_4(){
 
 void main_5(){
   OLED_Init();
-  OLED_Set_Pos(0, 0);
-  
+  BUPT_NB();
   while(1){
-    OLED_WrDat(0xFF);
     if(SW_Opt != 5)break;
   }
+}
+
+void main_8(){
+  DisableInterrupts;
 }
 
 

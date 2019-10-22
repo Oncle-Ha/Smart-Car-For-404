@@ -95,15 +95,41 @@ void PIT0_ISR_0(void)
 }
 
 extern double systime, sin_systime;
+int Upper = -1;
+extern uint8_t To_Matrix[128][8];
+
 void PIT0_ISR_1(void)
 {
     PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
-    systime += 0.01;
-    sin_systime = sin(systime);
+
     if(LED_state[1])
     {
+        systime += 0.01;
+        sin_systime = sin(systime);
         uartPrintf(UARTR0, "%.6lf\n", sin_systime);
+    }else if(LED_state[4])
+    {
+        systime += 0.1;
+        sin_systime = sin(systime);
+        if(Upper < 127) ++Upper;
+        uint8_t x, y;
+        Transform(Upper, sin_systime, &x, &y);
+        if(Upper == 127){
+            for(int i = 0; i < Upper; ++i){
+                for(int j = 0; j < 8; ++j){
+                    To_Matrix[i][j] = To_Matrix[i + 1][j];
+                }
+            }
+        }
+        for(int j = 0; j < 8; ++j)
+            To_Matrix[Upper][j] = 0;
+
+        Evaluate(x, y, 1);
+        Show_Matrix();
+
     }
+    //预计加个OLED显示Sint函数 LED_state[4]
+
 }
 
 void PIT0_ISR_2(void)
@@ -112,6 +138,26 @@ void PIT0_ISR_2(void)
     uartPrintf(UARTR0, "%d\n", ftm_count_get(CFTM1));
     ftm_count_clean(CFTM1);
 }
+//定时器0中断函数
+
+void PIT0_ISR(void)
+{
+    switch (SW_Opt)
+    {
+    case 0:
+        PIT0_ISR_0();
+        break;
+    case 1:
+        PIT0_ISR_1();
+        break;
+    case 2:
+        PIT0_ISR_2();
+        break;
+    default:
+        break;
+    }
+}
+
 
 void UART0_ISR(void)
 {
@@ -127,6 +173,7 @@ void UART0_ISR(void)
         break;
     }
 }
+
 //串口1接收中断服务例程
 void UART1_ISR(void)
 {
@@ -162,25 +209,7 @@ void UART2_ISR(void)
     }
     EnableInterrupts; //开总中断
 }
-//定时器0中断函数
 
-void PIT0_ISR(void)
-{
-    switch (SW_Opt)
-    {
-    case 0:
-        PIT0_ISR_0();
-        break;
-    case 1:
-        PIT0_ISR_1();
-        break;
-    case 2:
-        PIT0_ISR_2();
-        break;
-    default:
-        break;
-    }
-}
 /*
 应用于PTA0-PTD7的外部中断
 
@@ -203,15 +232,23 @@ extern int num_16_base;
 extern PTxn LED_USE_PT[4];
 const int time_10_ms = 10 * CORE_CLK_KHZ / 4;
 
-void KBI0_Isr(void)
-{
-
-    KBI0->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
-    KBI0->SC |= KBI_SC_RSTKBSP_MASK; //清除中断标志位
-    
+int Button_Balance(PTxn ptxn){//按键消抖，返回是否为正常按下
     int low_level_time = 0;
-    while(!gpio_get(PTD4)) ++low_level_time;//消抖
-    if(low_level_time > time_10_ms){//
+    while(!gpio_get(ptxn)) ++low_level_time;//消抖
+    return low_level_time > time_10_ms;
+}
+
+void KBI0_Isr_1(){
+    if (Button_Balance(PTD4))
+    {
+        LED_state[4] ^= 1;
+        // gpio_set(PTG3, LED_state[3]);
+    }
+}
+
+void KBI0_Isr_4(){//16进制显示
+    
+    if(Button_Balance(PTD4)){//
         if(num_16_base == 15){
             num_16_base = 0;
 
@@ -226,6 +263,33 @@ void KBI0_Isr(void)
         }
     }
 
+}
+
+void KBI0_Isr_5(){//OLED清屏
+    if(Button_Balance(PTD4)){
+        OLED_CLS();
+        OLED_Set_Pos(0, 0);
+    }
+}
+
+void KBI0_Isr(void)
+{
+
+    KBI0->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
+    KBI0->SC |= KBI_SC_RSTKBSP_MASK; //清除中断标志位
+    switch (SW_Opt) {
+        case 1:
+            KBI0_Isr_1();
+            break;
+        case 4 :
+            KBI0_Isr_4();
+            break;
+        case 5 :
+            KBI0_Isr_5();
+            break;
+        default:
+            break;
+    }
     // if (!gpio_get(PTD5)) // 判断PTD5是否是低电平
     // {
     //     uartPrintf(UARTR2, "PTD5 interrupt\n");
@@ -238,37 +302,54 @@ void KBI0_Isr(void)
 
 */
 //KBI1中断函数
+
+void Change_LED(){//选择小题号，哪个灯亮就哪个
+    if (Button_Balance(PTF0))
+    {
+        LED_state[0] ^= 1;
+        gpio_set(PTG0, LED_state[0]);
+    }
+    if (Button_Balance(PTF1))
+    {
+        LED_state[1] ^= 1;
+        gpio_set(PTG1, LED_state[1]);
+    }
+    if (Button_Balance(PTF2))
+    {
+        LED_state[2] ^= 1;
+        gpio_set(PTG2, LED_state[2]);
+    }
+    if (Button_Balance(PTF3))
+    {
+        LED_state[3] ^= 1;
+        gpio_set(PTG3, LED_state[3]);
+    }
+}
+
+void KBI1_Isr_5(){//指定灯亮
+
+}
+
+
 void KBI1_Isr(void)
 {
 
     KBI1->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
     KBI1->SC |= KBI_SC_RSTKBSP_MASK; //清除中断标志位
-
+    Change_LED();
     // gpio_set(PTG0, 1); gpio_set(PTG1, 1); gpio_set(PTG2, 1); gpio_set(PTG3, 1);
-    if (!gpio_get(PTF0))
-    {
-        LED_state[0] ^= 1;
-        gpio_set(PTG0, LED_state[0]);
-    }
-    if (!gpio_get(PTF1))
-    {
-        LED_state[1] ^= 1;
-        gpio_set(PTG1, LED_state[1]);
-    }
-    if (!gpio_get(PTF2))
-    {
-        LED_state[2] ^= 1;
-        gpio_set(PTG2, LED_state[2]);
-    }
-    if (!gpio_get(PTF3))
-    {
-        LED_state[3] ^= 1;
-        gpio_set(PTG3, LED_state[3]);
+    switch (SW_Opt){
+        case 5:
+            KBI1_Isr_5();
+            break;
+        default:
+            break;
     }
 
-    SW_Opt = 0;
-    SW_Opt |= (gpio_get(PTF4));
-    SW_Opt |= (gpio_get(PTF5)) << 1;
-    SW_Opt |= (gpio_get(PTF6)) << 2;
-    SW_Opt |= (gpio_get(PTF7)) << 3;
+    //由于拨码开关与按键开关不能同时触发KBI1
+    // SW_Opt = 0;
+    // SW_Opt |= (gpio_get(PTF4));
+    // SW_Opt |= (gpio_get(PTF5)) << 1;
+    // SW_Opt |= (gpio_get(PTF6)) << 2;
+    // SW_Opt |= (gpio_get(PTF7)) << 3;
 }

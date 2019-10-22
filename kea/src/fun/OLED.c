@@ -673,3 +673,97 @@ void Draw_BMP(uint8_t x0,uint8_t y0,uint8_t x1,uint8_t y1,uint8_t bmp[])
   }
 }
 
+/*********************************************************** 
+* 函数名： void Coord_Init(uint32_t x,uint32_t y)
+* 功能描述：初始化64*128坐标对应值
+* 参数： x为横坐标范围，y为纵坐标范围
+* 返回：无
+***********************************************************/
+
+double X_Base = 0;
+double Y_Base = 0;//即一格表示实际数值多少
+double X1 = 0;
+double Y1 = 0;//左上角像素点坐标
+extern uint8_t To_Matrix[128][8];
+
+void Coord_Init(double x1, double y1, double x2, double y2){//
+  X1 = x1; Y1 = y1;
+  X_Base = (x2 - x1) / 128;
+  Y_Base = (y2 - y1) / 64;
+}
+
+/*********************************************************** 
+* 函数名： void Transform(double ix, double iy, uint8_t ox, uint8_t oy)
+* 功能描述：将数值(ix, iy)转换为坐标值(ox, oy)
+* 参数：
+* 返回：无
+***********************************************************/
+
+void Transform(double ix, double iy, uint8_t *ox, uint8_t *oy){
+  ix -= X1;
+  *ox = ix / X_Base;
+  iy -= Y1;
+  *oy = iy / Y_Base;
+}
+
+/*********************************************************** 
+* 函数名： void Evaluate(uint8_t x, uint8_t y, uint8_t opt)
+* 功能描述：将(x, y)赋值为opt
+* 参数：
+* 返回：无
+***********************************************************/
+
+void Evaluate(uint8_t x, uint8_t y, uint8_t opt){
+  if(opt) To_Matrix[x][y>>3] |= 1 << (y & 0x07);
+  else To_Matrix[x][y>>3] &= 0xFF ^ (1 << (y & 0x07));
+}
+
+/*********************************************************** 
+* 函数名： void Show_Matrix()
+* 功能描述：将(x, y)赋值为opt
+* 参数：
+* 返回：无
+***********************************************************/
+void Show_Matrix(){
+  for(int j = 0; j < 8; ++j){
+    OLED_Set_Pos(0, j);
+    for(int i = 0; i < 128; ++i){
+      OLED_WrDat(To_Matrix[i][j]);
+    }
+  }
+}
+
+
+/*********************************************************** 
+ * 输出北邮牛逼
+***********************************************************/
+void OLED_Print_Hanzi(int x, int y, char *s){
+  for(int k=0; k<2; k++){
+    for(int i=0; i<16; i++){
+      OLED_WrDat(s[i]);
+    }
+    OLED_Set_Pos(x, y+1);
+  }
+}
+void BUPT_NB(){
+  int x=0, y=0;
+
+  char BYNB[4][33] = {
+    {0x00,0x20,0x20,0x60,0x20,0x20,0x20,0x10,0x20,0x10,0xFF,0xFF,0x00,0x00,0x00,0x00,
+     0x00,0x00,0xFF,0x3F,0x40,0x40,0x20,0x40,0x10,0x40,0x08,0x40,0x00,0x78,0x00,0x00},/*"北",0*/
+
+    {0x00,0x00,0xF8,0x7F,0x08,0x21,0x08,0x21,0xFF,0x3F,0x08,0x21,0x08,0x21,0xF8,0x7F,
+     0x00,0x00,0xFE,0xFF,0x02,0x08,0x22,0x10,0xDA,0x08,0x06,0x07,0x00,0x00,0x00,0x00},/*"邮",1*/
+
+    {0x00,0x02,0x40,0x02,0x20,0x02,0x1E,0x02,0x10,0x02,0x10,0x02,0x10,0x02,0xFF,0xFF,
+     0x10,0x02,0x10,0x02,0x10,0x02,0x10,0x02,0x10,0x02,0x00,0x02,0x00,0x02,0x00,0x00},/*"牛",2*/
+
+    {0x40,0x00,0x40,0x40,0x42,0x20,0xCC,0x1F,0x00,0x20,0x82,0x5F,0xBA,0x4A,0xAA,0x4A,
+     0xAA,0x4A,0xAA,0x4F,0xAA,0x4A,0xAA,0x4A,0xBA,0x4A,0x82,0x5F,0x00,0x40,0x00,0x00}/*"逼",3*/
+    };
+    for(int i=0; i<4; i++) {
+      OLED_Set_Pos(x, y);
+      OLED_Print_Hanzi(x, y, BYNB[i]);
+      x+=16;
+    }
+}

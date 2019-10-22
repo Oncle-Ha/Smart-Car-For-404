@@ -21,5 +21,10 @@
  void Dly_ms(uint16_t ms);
  void OLED_Wr6Dat(uint8_t data);
 
+void Coord_Init(double x1, double y1, double x2, double y2);
+void Transform(double ix, double iy, uint8_t *ox, uint8_t *oy);
+void Evaluate(uint8_t x, uint8_t y, uint8_t opt);
+void Show_Matrix();
 
+void BUPT_NB();
 #endif
