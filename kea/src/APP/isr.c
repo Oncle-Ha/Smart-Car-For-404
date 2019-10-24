@@ -1,5 +1,5 @@
 #include "isr.h"
-extern int LED_state[4];
+extern uint8_t LED_state[5];
 extern int bupt;
 extern int Key;
 extern int SW_Opt; //拨码开关的01表示
@@ -153,11 +153,11 @@ void PIT0_ISR_1(void)
 {
     PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
 
-    if(LED_state[1])
+    if(LED_state[1] ||LED_state[2])
     {
         systime += 0.01;
         sin_systime = sin(systime);
-        uartPrintf(UARTR0, "%.6lf\n", sin_systime);
+        if(LED_state[1])uartPrintf(UARTR0, "%.6lf\n", sin_systime);
     }else if(LED_state[4])
     {
         systime += 0.1;
@@ -192,17 +192,40 @@ void PIT0_ISR_2(void)
 
 uint8_t time_8 = 0;//PIT0_8进了几次，即多少ms
 uint16_t cnt_8 = 0;//PWM的占空比
-void PIT0_ISR_8(void){
-    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+
+void PIT0_ISR_8_0(){
     ++time_8; 
-    if(cnt_8 < 1000 && time_8 % 1 == 0){
+    if(cnt_8 < 10000 && time_8 % 1 == 0){
         ++cnt_8;
         FTM_PWM_Duty(CFTM0, FTM_CH0, cnt_8);
     }
     if(time_8 % 10 == 0){
+        time_8 = 0;
+        // int val = adc_ave(ADC_CHANNEL_AD6, 255);
         int val = adc_once(ADC_CHANNEL_AD6);
         uart_sendware(UARTR0, &val, sizeof(val));
     }
+}
+
+void PIT0_ISR_8_1(){
+    if(!time_8){
+        // FTM_PWM_init(CFTM0, FTM_CH0, 50, 3000);
+    }
+    ++time_8; 
+    if(time_8 % 10 == 0){
+        time_8 = 10;
+        // int val = adc_ave(ADC_CHANNEL_AD6, 255);
+        int val = adc_once(ADC_CHANNEL_AD6);
+        uart_sendware(UARTR0, &val, sizeof(val)); 
+    }   
+        
+}
+
+void PIT0_ISR_8(void){
+    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+    if(LED_state[0])PIT0_ISR_8_0();
+    else 
+    if(LED_state[1])PIT0_ISR_8_1();
 }
 //定时器0中断函数
 

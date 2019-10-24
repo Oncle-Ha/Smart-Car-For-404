@@ -23,7 +23,7 @@
         <MultiCoreRunAll>1</MultiCoreRunAll>
     </Simulator>
     <DebugChecksum>
-        <Checksum>4007981654</Checksum>
+        <Checksum>3725028154</Checksum>
     </DebugChecksum>
     <Exceptions>
         <StopOnUncaught>_ 0</StopOnUncaught>
@@ -171,10 +171,9 @@
         <Bp7>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.48.3" 0 0 1 "" 0 "" 0</Bp7>
         <Bp8>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.61.3" 0 0 1 "" 0 "" 0</Bp8>
         <Bp9>_ 0 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.78.3" 0 0 1 "" 0 "" 0</Bp9>
-        <Bp10>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.254.9" 0 0 1 "" 0 "" 0</Bp10>
-        <Bp11>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.255.5" 0 0 1 "" 0 "" 0</Bp11>
-        <Bp12>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\drivers\ftm\ftm.c}.57.5" 0 0 1 "" 0 "" 0</Bp12>
-        <Count>13</Count>
+        <Bp10>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\main.c}.255.5" 0 0 1 "" 0 "" 0</Bp10>
+        <Bp11>_ 1 "EMUL_CODE" "{$PROJ_DIR$\src\APP\isr.c}.360.9" 0 0 1 "" 0 "" 0</Bp11>
+        <Count>12</Count>
     </Breakpoints2>
     <Aliases>
         <A0>_ "C:\IAR8\Local-repository\kea\src\drivers\gpio\gpio.c" ""</A0>

@@ -25,7 +25,7 @@ FTM_Type * FTMx[3] = { FTM0,FTM1,FTM2};
 *  参数说明：ftm：   PWM模块
              ch:     通道
 *            freq  ：频率
-             duty  ：占空比 0-1000    可以调节FTM_PRECISON这个系数来改变精度
+             duty  ：占空比 0-1000 // 0-10000    可以调节FTM_PRECISON这个系数来改变精度
    for example       FTM_PWM_init(CFTM0, FTM_CH1, 10000, 10);//PWM1 PTA1       
 *************************************************************************/
 void FTM_PWM_init(FTMn_e ftm, FTM_CHn_e ch, uint32_t freq, uint32_t duty)
@@ -100,7 +100,7 @@ void FTM_PWM_init(FTMn_e ftm, FTM_CHn_e ch, uint32_t freq, uint32_t duty)
     default:
         break;
     }
-    // FTMx[ftm]->MODE |= FTM_MODE_PWMSYNC_MASK; // 使能PWM模式
+    // FTMx[ftm]->MODE |= FTM_MODE_PWMSYNC_MASK; // 使能PWM同步模式
     FTMx[ftm]->SC = 0 ;
     FTMx[ftm]->CONTROLS[ch].CnSC = 0 ;
     ASSERT(ch <= channels);          // 断言， ch 最大为 channels ，超过此值，则无通道 且会报错

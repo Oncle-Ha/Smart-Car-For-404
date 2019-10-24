@@ -25,7 +25,7 @@ uint8_t LED_state[5] = {0, 0, 0, 0, 0};
 int SW_Opt = 0; //拨码开关的01表示
 int bupt = 0, Key = 0;
 double systime = 0, sin_systime;
-
+ 
 void main_0()
 {
   DisableInterrupts;
@@ -46,7 +46,7 @@ void main_0()
 void main_1_0()
 {
   DisableInterrupts;
-  uart_init(UARTR0, 115200);
+  uart_init(UARTR0, 9600);
 
   uart_rx_irq_en(UARTR0);
   EnableInterrupts;
@@ -145,7 +145,7 @@ void main_1()
   }
 }
 
-void main_2()
+void main_2()//需连接PTA0 PTE7
 {
   DisableInterrupts;
   PIT_Init(PIT_CHANNEL0, 1);            //初始化中断计时器PIT0
@@ -211,7 +211,7 @@ void main_8(){
   PIT_Init(PIT_CHANNEL0, 1000);//
   uart_init(UARTR0, 9600);// 打开串口用于虚拟示波器
   ADC_Init(ADC_CHANNEL_AD6, ADC_12BIT);//测PTB2的电压
-  FTM_PWM_init(CFTM0, FTM_CH0, 50, 0);
+  FTM_PWM_init(CFTM0, FTM_CH0, 50, 5000);
 
   uart_rx_irq_en(UARTR0);
   PIT_IRQ_EN(PIT_CHANNEL0); //启动PIT0 
@@ -240,8 +240,8 @@ void main()
   // for(int i = 4; i < 8; ++i)
   //   KBI_Init(KBIX1 , KBI_USE_PT1[i] - 32, KBI_RISING__HIGH);
   for (int i = 0; i < 4; ++i)
-    KBI_Enable(KBIX1, KBI_USE_PT1[i] - 32);
-  KBI_Enable(KBIX0, PTD4);
+    KBI_Enable(KBIX1, KBI_USE_PT1[i] - 32); 
+  KBI_Enable(KBIX0, PTD4); 
 
   EnableInterrupts;
 
