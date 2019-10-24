@@ -76,6 +76,57 @@ void UART0_ISR_2(void)
     EnableInterrupts; //开总中断
 }
 
+void UART0_ISR(void)
+{
+    switch (SW_Opt)
+    {
+    case 0:
+        UART0_ISR_0();
+        break;
+    case 1:
+        UART0_ISR_1();
+        break;
+    default:
+        break;
+    }
+}
+
+//串口1接收中断服务例程
+void UART1_ISR(void)
+{
+    DisableInterrupts; //关总中断
+    uint8_t Data = '1';
+    if (UART1->S1 & UART_S1_RDRF_MASK) //接收数据寄存器满
+    {
+        Data = uart_getchar(UARTR1);
+        //...
+    }
+    if (UART1->S1 & UART_S1_TDRE_MASK) //发送数据寄存器空
+    {
+        uart_putchar(UARTR1, Data);
+        //...
+    }
+    EnableInterrupts; //开总中断
+}
+
+//串口2接收中断服务例程
+void UART2_ISR(void)
+{
+    DisableInterrupts; //关总中断
+    uint8_t Data = '2';
+    if (UART2->S1 & UART_S1_RDRF_MASK) //接收数据寄存器满
+    {
+        Data = uart_getchar(UARTR2);
+        //...
+    }
+    if (UART2->S1 & UART_S1_TDRE_MASK) //发送数据寄存器空
+    {
+        uart_putchar(UARTR2, Data);
+        //...
+    }
+    EnableInterrupts; //开总中断
+}
+
 void PIT0_ISR_0(void)
 {
     PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK; //清除中断标志位
@@ -138,6 +189,21 @@ void PIT0_ISR_2(void)
     uartPrintf(UARTR0, "%d\n", ftm_count_get(CFTM1));
     ftm_count_clean(CFTM1);
 }
+
+uint8_t time_8 = 0;//PIT0_8进了几次，即多少ms
+uint16_t cnt_8 = 0;//PWM的占空比
+void PIT0_ISR_8(void){
+    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+    ++time_8; 
+    if(cnt_8 < 1000 && time_8 % 1 == 0){
+        ++cnt_8;
+        FTM_PWM_Duty(CFTM0, FTM_CH0, cnt_8);
+    }
+    if(time_8 % 10 == 0){
+        int val = adc_once(ADC_CHANNEL_AD6);
+        uart_sendware(UARTR0, &val, sizeof(val));
+    }
+}
 //定时器0中断函数
 
 void PIT0_ISR(void)
@@ -153,62 +219,14 @@ void PIT0_ISR(void)
     case 2:
         PIT0_ISR_2();
         break;
-    default:
-        break;
-    }
-}
-
-
-void UART0_ISR(void)
-{
-    switch (SW_Opt)
-    {
-    case 0:
-        UART0_ISR_0();
-        break;
-    case 1:
-        UART0_ISR_1();
+    case 8:
+        PIT0_ISR_8();
         break;
     default:
         break;
     }
 }
 
-//串口1接收中断服务例程
-void UART1_ISR(void)
-{
-    DisableInterrupts; //关总中断
-    uint8_t Data = '1';
-    if (UART1->S1 & UART_S1_RDRF_MASK) //接收数据寄存器满
-    {
-        Data = uart_getchar(UARTR1);
-        //...
-    }
-    if (UART1->S1 & UART_S1_TDRE_MASK) //发送数据寄存器空
-    {
-        uart_putchar(UARTR1, Data);
-        //...
-    }
-    EnableInterrupts; //开总中断
-}
-
-//串口2接收中断服务例程
-void UART2_ISR(void)
-{
-    DisableInterrupts; //关总中断
-    uint8_t Data = '2';
-    if (UART2->S1 & UART_S1_RDRF_MASK) //接收数据寄存器满
-    {
-        Data = uart_getchar(UARTR2);
-        //...
-    }
-    if (UART2->S1 & UART_S1_TDRE_MASK) //发送数据寄存器空
-    {
-        uart_putchar(UARTR2, Data);
-        //...
-    }
-    EnableInterrupts; //开总中断
-}
 
 /*
 应用于PTA0-PTD7的外部中断

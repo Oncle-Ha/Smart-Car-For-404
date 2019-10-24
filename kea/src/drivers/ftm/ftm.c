@@ -50,7 +50,7 @@ void FTM_PWM_init(FTMn_e ftm, FTM_CHn_e ch, uint32_t freq, uint32_t duty)
     }
     else
     {
-      mod = (clk_hz >> (ps+4)) / freq; // 求 MOD 的值
+      mod = (clk_hz >> (ps+4)) / freq; // 求 MOD 的值 //ps = 0
     }
     cv = (duty * (mod - 0 + 1)) / FTM_PRECISON;  //系数
     
@@ -58,9 +58,9 @@ void FTM_PWM_init(FTMn_e ftm, FTM_CHn_e ch, uint32_t freq, uint32_t duty)
     {
     case CFTM0:
       channels = 2;
-      SIM->SCGC |= SIM_SCGC_FTM0_MASK;
-      SIM->PINSEL &=~SIM_PINSEL_FTM0PS0_MASK ;  // PWM0 PTA0
-      SIM->PINSEL &=~SIM_PINSEL_FTM0PS1_MASK ;  // PWM1 PTA1
+      SIM->SCGC |= SIM_SCGC_FTM0_MASK;  // FTM0模块的总线时钟使能。
+      SIM->PINSEL &=~SIM_PINSEL_FTM0PS0_MASK ;  // PWM0 PTA0  :FTM0_CH0通道映射到PTA0上
+      SIM->PINSEL &=~SIM_PINSEL_FTM0PS1_MASK ;  // PWM1 PTA1  :FTM0_CH1通道映射到PTA1上。
 //      SIM->PINSEL |= SIM_PINSEL_FTM0PS0_MASK ;  // PWM0 PTB2
 //      SIM->PINSEL |= SIM_PINSEL_FTM0PS1_MASK ;  // PWM1 PTB3
       break ;
@@ -100,9 +100,10 @@ void FTM_PWM_init(FTMn_e ftm, FTM_CHn_e ch, uint32_t freq, uint32_t duty)
     default:
         break;
     }
+    // FTMx[ftm]->MODE |= FTM_MODE_PWMSYNC_MASK; // 使能PWM模式
     FTMx[ftm]->SC = 0 ;
     FTMx[ftm]->CONTROLS[ch].CnSC = 0 ;
-    ASSERT(ch <= channels);          // 断言， ch 最大为 channels ，超过此值，则无通道
+    ASSERT(ch <= channels);          // 断言， ch 最大为 channels ，超过此值，则无通道 且会报错
     //边沿对齐，正极性PWM
     FTMx[ftm]->CONTROLS[ch].CnSC |= (0
                                   //  |FTM_CnSC_ELSA_MASK
@@ -111,15 +112,15 @@ void FTM_PWM_init(FTMn_e ftm, FTM_CHn_e ch, uint32_t freq, uint32_t duty)
                                     |FTM_CnSC_MSB_MASK
                                  //   |FTM_CnSC_CHIE_MASK
                                 //    |FTM_CnSC_CHF_MASK
-                                     );
-    FTMx[ftm]->SC &= ~FTM_SC_CPWMS_MASK;
+                                     ); //边沿对齐 PWM 高电平真脉冲（匹配时清零输出
+    FTMx[ftm]->SC &= ~FTM_SC_CPWMS_MASK; // FTM计数器可工作在向上计数模式中。
     //********************
     //freq = MOD - CNTIN + 0x0001
     //duty = CnV - CNTIN ;
     //********************
 //    FTMx[ftm]->CNTIN = 0 ;
     FTMx[ftm]->MOD = mod ;
-    FTMx[ftm]->CONTROLS[ch].CnV = cv  ;
+    FTMx[ftm]->CONTROLS[ch].CnV = cv  ;  //输出模式的匹配值
     FTMx[ftm]->SC = FTM_SC_CLKS(1)|FTM_SC_PS(4) ;//系统时钟，16分频  2.5M
    
 }

@@ -613,13 +613,14 @@ typedef struct {
  */
 
 /** FTM - Register Layout Typedef */
-typedef struct {
+typedef struct {//可在KEA128RM中查到定义
   __IO uint32_t SC;                                /**< Status And Control, offset: 0x0 */
   __IO uint32_t CNT;                               /**< Counter, offset: 0x4 */
   __IO uint32_t MOD;                               /**< Modulo, offset: 0x8 */
   struct {                                         /* offset: 0xC, array step: 0x8 */
     __IO uint32_t CnSC;                              /**< Channel (n) Status And Control, array offset: 0xC, array step: 0x8 */
-    __IO uint32_t CnV;                               /**< Channel (n) Value, array offset: 0x10, array step: 0x8 */
+    __IO uint32_t CnV;     //输入模式下捕捉的FTM计数器值或用于输出模式的匹配值
+                          /**< Channel (n) Value, array offset: 0x10, array step: 0x8 */
   } CONTROLS[6];
        uint8_t RESERVED_0[16];
   __IO uint32_t CNTIN;                             /**< Counter Initial Value, offset: 0x4C */
@@ -3019,7 +3020,7 @@ typedef struct {
   __I  uint32_t SRSID;                             /**< System Reset Status and ID Register, offset: 0x0 */
   __IO uint32_t SOPT0;                             /**< System Options Register 0, offset: 0x4 */
   __IO uint32_t SOPT1;                             /**< System Options Register, offset: 0x8 */
-  __IO uint32_t PINSEL;                            /**< Pin Selection Register 0, offset: 0xC */
+  __IO uint32_t PINSEL; //PINSEL0                           /**< Pin Selection Register 0, offset: 0xC */
   __IO uint32_t PINSEL1;                           /**< Pin Selection Register 1, offset: 0x10 */
   __IO uint32_t SCGC;                              /**< System Clock Gating Control Register, offset: 0x14 */
   __I  uint32_t UUIDL;                             /**< Universally Unique Identifier Low Register, offset: 0x18 */

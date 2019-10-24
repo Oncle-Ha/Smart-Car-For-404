@@ -21,7 +21,7 @@
   ADC_CHANNEL_AD15 ------------- F7
 s
 */
-int LED_state[5] = {0, 0, 0, 0, 0};
+uint8_t LED_state[5] = {0, 0, 0, 0, 0};
 int SW_Opt = 0; //拨码开关的01表示
 int bupt = 0, Key = 0;
 double systime = 0, sin_systime;
@@ -208,6 +208,19 @@ void main_5(){
 
 void main_8(){
   DisableInterrupts;
+  PIT_Init(PIT_CHANNEL0, 1000);//
+  uart_init(UARTR0, 9600);// 打开串口用于虚拟示波器
+  ADC_Init(ADC_CHANNEL_AD6, ADC_12BIT);//测PTB2的电压
+  FTM_PWM_init(CFTM0, FTM_CH0, 50, 0);
+
+  uart_rx_irq_en(UARTR0);
+  PIT_IRQ_EN(PIT_CHANNEL0); //启动PIT0 
+  EnableInterrupts;
+  while(1){
+    if(SW_Opt != 8)break;
+  }
+  uart_rx_irq_dis(UARTR0);
+  PIT_IRQ_DIS(PIT_CHANNEL0);
 }
 
 
@@ -258,6 +271,9 @@ void main()
       break;
     case 5://OLED
       main_5();
+      break;
+    case 8://FWM
+      main_8();
       break;
     default:
       break;
