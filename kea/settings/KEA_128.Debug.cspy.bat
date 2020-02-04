@@ -25,7 +25,7 @@ if not "%~1" == "" goto debugFile
 
 @echo on 
 
-"C:\IAR8\common\bin\cspybat" -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.general.xcl" --backend -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.driver.xcl" 
+"D:\学习资源\智能车\IAR8\common\bin\cspybat" -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.general.xcl" --backend -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.driver.xcl" 
 
 @echo off 
 goto end 
@@ -34,7 +34,7 @@ goto end
 
 @echo on 
 
-"C:\IAR8\common\bin\cspybat" -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\读书人的事\智能车\kea模板7.8\settings\KEA_128.Debug.driver.xcl" 
+"D:\学习资源\智能车\IAR8\common\bin\cspybat" -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.general.xcl" "--debug_file=%~1" --backend -f "D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\settings\KEA_128.Debug.driver.xcl" 
 
 @echo off 
 :end

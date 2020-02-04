@@ -1,105 +1,117 @@
 #include "isr.h"
-
-
-//´®¿Ú0½ÓÊÕÖĞ¶Ï·şÎñÀı³Ì
+#include "subisr.h"
+#include<math.h>
+extern int *LED_state;
+extern double systime;
+extern double sin_systime;
+//ä¸²å£0æ¥æ”¶ä¸­æ–­æœåŠ¡ä¾‹ç¨‹
 void UART0_ISR(void)
-{    
-  DisableInterrupts ;//¹Ø×ÜÖĞ¶Ï
-  uint8_t Data='0';
-  if(UART0->S1 & UART_S1_RDRF_MASK)   //½ÓÊÕÊı¾İ¼Ä´æÆ÷Âú
-  {
-    Data=uart_getchar(UARTR0);
-    //...
-  }
-  if(UART0->S1  & UART_S1_TDRE_MASK )  //·¢ËÍÊı¾İ¼Ä´æÆ÷¿Õ
-  {
-    uart_putchar(UARTR0,Data);
-    //...
-  }
-  EnableInterrupts;   //¿ª×ÜÖĞ¶Ï
+{
+    DisableInterrupts; //å…³æ€»ä¸­æ–­
+    uint8_t Data = '0';
+    if (UART0->S1 & UART_S1_RDRF_MASK) //æ¥æ”¶æ•°æ®å¯„å­˜å™¨æ»¡
+    {
+        Data = uart_getchar(UARTR0);
+        if(Data == 's') {
+            PIT_IRQ_EN(PIT_CHANNEL0);
+        }
+        else if(Data == 'p'){ 
+            PIT_IRQ_DIS(PIT_CHANNEL0);
+        }
+    }
+    /* if (UART0->S1 & UART_S1_TDRE_MASK) //å‘é€æ•°æ®å¯„å­˜å™¨ç©º
+    {
+        uart_putchar(UARTR0, Data);
+        //...
+    }
+    */
+    EnableInterrupts; //å¼€æ€»ä¸­æ–­
 }
 
-
-//´®¿Ú1½ÓÊÕÖĞ¶Ï·şÎñÀı³Ì
+//ä¸²å£1æ¥æ”¶ä¸­æ–­æœåŠ¡ä¾‹ç¨‹
 void UART1_ISR(void)
-{    
-  DisableInterrupts ;//¹Ø×ÜÖĞ¶Ï
-  uint8_t Data='1';
-  if(UART1->S1 & UART_S1_RDRF_MASK)   //½ÓÊÕÊı¾İ¼Ä´æÆ÷Âú
-  {
-    Data=uart_getchar(UARTR1);
-    //...
-  }
-  if(UART1->S1  & UART_S1_TDRE_MASK )  //·¢ËÍÊı¾İ¼Ä´æÆ÷¿Õ
-  {
-    uart_putchar(UARTR1,Data);
-    //...
-  }
-  EnableInterrupts;   //¿ª×ÜÖĞ¶Ï
+{
+    DisableInterrupts; //å…³æ€»ä¸­æ–­
+    uint8_t Data = '1';
+    if (UART1->S1 & UART_S1_RDRF_MASK) //æ¥æ”¶æ•°æ®å¯„å­˜å™¨æ»¡
+    {
+        Data = uart_getchar(UARTR1);
+        //...
+    }
+    if (UART1->S1 & UART_S1_TDRE_MASK) //å‘é€æ•°æ®å¯„å­˜å™¨ç©º
+    {
+        uart_putchar(UARTR1, Data);
+        //...
+    }
+    EnableInterrupts; //å¼€æ€»ä¸­æ–­
 }
 
-//´®¿Ú2½ÓÊÕÖĞ¶Ï·şÎñÀı³Ì
+//ä¸²å£2æ¥æ”¶ä¸­æ–­æœåŠ¡ä¾‹ç¨‹
 void UART2_ISR(void)
-{    
-  DisableInterrupts ;//¹Ø×ÜÖĞ¶Ï
-  uint8_t Data='2';
-  if(UART2->S1 & UART_S1_RDRF_MASK)   //½ÓÊÕÊı¾İ¼Ä´æÆ÷Âú
-  {
-    Data=uart_getchar(UARTR2);
-    //...
-  }
-  if(UART2->S1  & UART_S1_TDRE_MASK )  //·¢ËÍÊı¾İ¼Ä´æÆ÷¿Õ
-  {
-    uart_putchar(UARTR2,Data);
-    //...
-  }
-  EnableInterrupts;   //¿ª×ÜÖĞ¶Ï
-}
-
-
-
-int stime = 0;  //ÏµÍ³Ê±¼ä
-//¶¨Ê±Æ÷0ÖĞ¶Ïº¯Êı
-
-void PIT0_ISR(void)
 {
-  PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;//Çå³ıÖĞ¶Ï±êÖ¾Î»
-
-  stime++;  
-  uartPrintf(UARTR2,"hello %d\n",stime);
-  
+    DisableInterrupts; //å…³æ€»ä¸­æ–­
+    uint8_t Data = '2';
+    if (UART2->S1 & UART_S1_RDRF_MASK) //æ¥æ”¶æ•°æ®å¯„å­˜å™¨æ»¡
+    {
+        Data = uart_getchar(UARTR2);
+        //...
+    }
+    if (UART2->S1 & UART_S1_TDRE_MASK) //å‘é€æ•°æ®å¯„å­˜å™¨ç©º
+    {
+        uart_putchar(UARTR2, Data);
+        //...
+    }
+    EnableInterrupts; //å¼€æ€»ä¸­æ–­
 }
 
+int stime = 0; //ç³»ç»Ÿæ—¶é—´
+//å®šæ—¶å™¨0ä¸­æ–­å‡½æ•°
 
+
+void PIT0_ISR(void){
+    PIT->CHANNEL[0].TFLG |= PIT_TFLG_TIF_MASK;
+    // ä¸‹é¢ç”¨æŒ‰é”®å¼€å…³æ§åˆ¶é€‰å–éœ€è¦çš„æ¨¡å—
+    if(1){
+        PIT0_ISR_GPIO();
+    }
+    else if(0){
+        PIT0_ISR_UART();
+    }
+}
+
+åº”ç”¨äºPTA0-PTD7çš„å¤–éƒ¨ä¸­æ–­
+
+*/
+//KBI0ä¸­æ–­å‡½æ•°
+
+//GPIOé¢˜ç›®
+void KBI0_Isr(void)
+{
+
+    KBI0->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
+    KBI0->SC |= KBI_SC_RSTKBSP_MASK; //æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
+
+    if (!gpio_get(PTD5)) // åˆ¤æ–­PTD5æ˜¯å¦æ˜¯ä½ç”µå¹³
+    {
+        uartPrintf(UARTR2, "PTD5 interrupt\n");
+    }
+    //æŒ‰é”®å¼€å…³ï¼ŒæŒ‰ä¸€ä¸‹å³æ”¹å˜å¯¹åº”LEDç¯çŠ¶æ€
+    if(!gpio_get(PTF0)) LED_state[0] ^= 1;
+    if(!gpio_get(PTF1)) LED_state[1] ^= 1;
+    if(!gpio_get(PTF2)) LED_state[2] ^= 1;
+    if(!gpio_get(PTF3)) LED_state[3] ^= 1;
+    
+}
 
 
 /*
-Ó¦ÓÃÓÚPTA0-PTD7µÄÍâ²¿ÖĞ¶Ï
+åº”ç”¨äºPTE0-PTH7çš„å¤–éƒ¨ä¸­æ–­
 
 */
-//KBI0ÖĞ¶Ïº¯Êı
-void KBI0_Isr(void)	
+//KBI1ä¸­æ–­å‡½æ•°
+void KBI1_Isr(void)
 {
-  
-  KBI0->SC |= KBI_SC_KBACK_MASK;       /* clear interrupt flag */
-  KBI0->SC |= KBI_SC_RSTKBSP_MASK ;    //Çå³ıÖĞ¶Ï±êÖ¾Î»
-  
-  if(!gpio_get(PTD5)) // ÅĞ¶ÏPTD5ÊÇ·ñÊÇµÍµçÆ½
-  {
-    uartPrintf(UARTR2,"PTD5 interrupt\n");
-  }
-  
-}
 
-
-/*
-Ó¦ÓÃÓÚPTE0-PTH7µÄÍâ²¿ÖĞ¶Ï
-
-*/
-//KBI1ÖĞ¶Ïº¯Êı
-void KBI1_Isr(void)	
-{
-  
-  KBI1->SC |= KBI_SC_KBACK_MASK;                /* clear interrupt flag */
-  KBI1->SC |= KBI_SC_RSTKBSP_MASK ;             //Çå³ıÖĞ¶Ï±êÖ¾Î»
+    KBI1->SC |= KBI_SC_KBACK_MASK;   /* clear interrupt flag */
+    KBI1->SC |= KBI_SC_RSTKBSP_MASK; //æ¸…é™¤ä¸­æ–­æ ‡å¿—ä½
 }

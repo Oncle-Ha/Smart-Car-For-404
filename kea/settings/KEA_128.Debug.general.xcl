@@ -1,14 +1,14 @@
-"C:\IAR8\arm\bin\armproc.dll" 
+"D:\学习资源\智能车\IAR8\arm\bin\armproc.dll" 
 
-"C:\IAR8\arm\bin\armjlink2.dll" 
+"D:\学习资源\智能车\IAR8\arm\bin\armjlink2.dll" 
 
-"D:\读书人的事\智能车\kea模板7.8\Debug\Exe\KEA_128.out" 
+"D:\英雄时刻\github\smartcar\Smart-Car-For-404\kea\Debug\Exe\KEA_128.out" 
 
---plugin="C:\IAR8\arm\bin\armbat.dll" 
+--plugin="D:\学习资源\智能车\IAR8\arm\bin\armbat.dll" 
 
---device_macro="C:\IAR8\arm\config\debugger\NXP\KExx.dmac" 
+--device_macro="D:\学习资源\智能车\IAR8\arm\config\debugger\NXP\KExx.dmac" 
 
---flash_loader="C:\IAR8\arm\config\flashloader\NXP\FlashKE04Z128_4.board" 
+--flash_loader="D:\学习资源\智能车\IAR8\arm\config\flashloader\NXP\FlashKE04Z128_4.board" 
 
 
 

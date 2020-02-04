@@ -1,4 +1,7 @@
+// ÊµÅÊ∞¥ÁÅØ
+
 #include "headfile.h"
+
 
 /*
   ADC_CHANNEL_AD0 -------------- A0   
@@ -19,222 +22,46 @@
   ADC_CHANNEL_AD15 ------------- F7
 
 */
+int LED_state[4] = {1, 0, 0, 0};
+double systime=0, sin_systime;
 
-
-
-
-
-
-//#if -#elif -#endif 
-#if 0
-//¥Æø⁄¥Ú”° °∞Hello world!°±
+//#if -#elif -#endif
+#if 0 //GPIOÈ¢ò
 void main()
 {
-  DisableInterrupts;  
-  uart_init(UARTR2,38400); 
-  EnableInterrupts; 
-  while(1)
-  {
-    uartPrintf(UARTR2,"hello world\n");
-    delayus(1000000);
-  }
-}
-#elif 0       
+  DisableInterrupts;
+  PIT_Init(PIT_CHANNEL0, 1);
+  uart_init(UARTR0, 9600);
+  gpio_init(PTG0, 1, 1);
+  gpio_init(PTG1, 1, 0);
+  gpio_init(PTG2, 1, 0);
+  gpio_init(PTG3, 1, 0);
 
-void main()
-{
-  int result;
-  DisableInterrupts;  
-  uart_init(UARTR2,38400);
-  uartPrintf(UARTR2,"GPIO\n");
- 
-  //GPO
-  gpio_init (PTF3, GPO,HIGH);      
-  //GPI
-  gpio_init (PTC5, GPI, LOW);    
-  
-  result = gpio_get(PTC5);        
-  uartPrintf(UARTR2,"result=%d\n",result);
-  
-  EnableInterrupts;
-  while(1)                              
-  {
-     gpio_turn(PTF3);
-     delayms(100);
-  } 
-}
-#elif 0
-
-void main()
-{
-  int32 adResult8[5] = 0;
-  DisableInterrupts;  
-  uart_init(UARTR2,38400);
-  uartPrintf(UARTR2,"AD\n");
-  ADC_Init(ADC_CHANNEL_AD1,ADC_8BIT); //PTA0 
-  
-  EnableInterrupts;
-  while(1)
-  {
-    int i;
-      for(i=0;i<5;i++)
-    adResult8[i] = adc_once(ADC_CHANNEL_AD1);
-    
-    for(i=0;i<5;i++)
-      uartPrintf(UARTR2,"(0~255): %d ",adResult8[i]);
-    uartPrintf(UARTR2,"\n");
-
-    delayms(1000);
-;
-  }
-}
-#elif 0
-
-void main()
-{  
-  DisableInterrupts;  
-  uart_init(UARTR2,38400);
-  uartPrintf(UARTR2,"FTM\n");
-  FTM_PWM_init(CFTM2, FTM_CH0, 10000, 2000);//PWM2 PTC0 10khz,20%’ºø’±»
-  EnableInterrupts;
-  while(1)
-  {
-  }
-}
-#elif 0
-
-void main()
-{
-  int i = 0;
-  DisableInterrupts;  
-  uart_init(UARTR2, 38400);
-  gpio_init (PTF3, GPO,HIGH);
-  uartPrintf(UARTR2,"EXTI \n");
-  KBI_Init(KBIX0, 29, KBI_FALLING_LOW);//PTD5     
-  
-  EnableInterrupts;
-  while(1)
-  {
-    gpio_turn(PTF3);
-    delayms(1000);
-  }
-}
-#elif 0
-
-void main()
-{
-  DisableInterrupts;  
-  uart_init(UARTR2, 38400);
-  uartPrintf(UARTR2,"PIT∂® ±÷–∂œ\n");
-  PIT_Init(PIT_CHANNEL0, 100);    //PIT0 ƒ⁄≤ø÷–∂œ √ø√Î÷¥––100¥Œ            
   PIT_IRQ_EN(PIT_CHANNEL0);
+  uart_rx_irq_en(UARTR0);
   EnableInterrupts;
-  
-  while(1)
-  {
-    
+  while (1)
+    ;
+
+  return;
+  Ôºâ
+#elif 1 //UartÈ¢ò
+void main()
+{
+  DisableInterrupts;
+  PIT_Init(PIT_CHANNEL0, 100)
+  uart_init(UARTR1, 115200);
+
+  PIT_IRQ_EN(PIT_CHANNEL0);
+  uart_rx_irq_en(UARTR1);
+
+
+  while(1){
+    uart_sendware(UARTR0,&sin_systime,sizeof(sin_systime));
   }
-}
-
-#elif 0
-void main()
-{
-  DisableInterrupts;
-  uart_init(UARTR2, 38400);
-  uart_rx_irq_en(UARTR2);    //ø™∆Ù¥Æø⁄2µƒΩ” ’÷–∂œ∑˛ŒÒ∫Ø ˝
-  EnableInterrupts;
-  while(1)
-  {}
-}
-
-
-#elif 0
-void main()
-{
-  DisableInterrupts;
-
-  steer_init();  //  ≥ı ºªØ∂Êª˙     H2π‹Ω≈
-  PWMSetSteer(1500);  //…Ë÷√’ºø’±» ∏ƒ±‰∂Êª˙Ω«∂»
-  EnableInterrupts;
-  while(1)
-  {}
-}
-
-
-#elif 1
-void main()
-{
-  DisableInterrupts;
-
-  motor_init();    //≥ı ºªØµÁª˙
-  PWMSetMotor2(5000,5000);  //…Ë÷√¡Ω∏ˆµÁª˙µƒpwm≤®’ºø’±» 
-  EnableInterrupts;
-  while(1)
-  {}
-}
-
-
-#elif 0
-
-
-void main()
-{
-  uint32 temp1=0,temp2=0;
-  int speedl,speedr;
-  DisableInterrupts;
-  uart_init(UARTR2,38400);
-  ftm_count_init(CFTM0);   //E0π‹Ω≈Œ™≤‚ÀŸπ‹Ω≈               E0Ω”±‡¬Î∆˜LSB 
-  gpio_init(PTC6,GPI,0);    //”√”⁄≈–∂œ∑ΩœÚ                  C6Ω”±‡¬Î∆˜DIR 
-  port_pull(PTC6);          //IO…œ¿≠
-    
-  ftm_count_init(CFTM1);    //E7π‹Ω≈Œ™≤‚ÀŸπ‹Ω≈              E7Ω”±‡¬Î∆˜LSB
-  gpio_init(PTC7,GPI,0);    //”√”⁄≈–∂œ∑ΩœÚ                  C7Ω”±‡¬Î∆˜DIR
-  port_pull(PTC7);          //IO…œ¿≠
 
   EnableInterrupts;
-  while(1)
-  {
-    temp1 = ftm_count_get(CFTM0);  
-    ftm_count_clean(CFTM0);
-    temp2 = ftm_count_get(CFTM1);
-    ftm_count_clean(CFTM1);
-    
-    //∏˘æ›∑ΩœÚ–≈∫≈≈–∂œ’˝∏∫£¨ºŸ…Ë∑ΩœÚ–≈∫≈ «∏ﬂµÁ∆Ω ±Œ™∑¥◊™
-    if(gpio_get(PTC6))    
-      speedl = -((int16)(temp1));//ÀŸ∂»»°∏∫
-    else                
-      speedl = temp1;             
-    if(gpio_get(PTC7))    
-      speedr = -((int16)(temp2));//ÀŸ∂»»°∏∫
-    else                
-      speedr = temp2;
-    
-    uartPrintf(UARTR2,"%d  %d\n",speedl,speedr);
-    delayms(1000);
-  }
+
+  return;
 }
-
-
-
-#endif 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
+#endif
